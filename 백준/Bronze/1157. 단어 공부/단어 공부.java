@@ -7,7 +7,8 @@ import java.io.OutputStreamWriter;
 public class Main {
     static String S;
     static int[] list = new int[26];
-    static int max = 0, count, s;
+    static int max = 0;
+    static char s;
 
     public static void main(String[] args) throws IOException {
         //given
@@ -21,19 +22,16 @@ public class Main {
             list[S.charAt(i)-'A']++;
         }
 
-        count = 0;
         for (int i = 0; i < list.length; i++) {
             if(max<list[i]){
                 max=list[i];
-                s = i;
-                count = 1;
+                s = (char)(i+'A');
             }
             else if (max==list[i])
-                count++;
+                s = '?';
         }
 
-        if(count ==1) bw.write(s+'A');
-        else bw.write("?");
+        bw.write(s);
 
         //then
         bw.flush();
