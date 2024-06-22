@@ -17,11 +17,8 @@ public class Main {
         V = Integer.parseInt(st.nextToken());
 
         //when
-        if(A-B == 1) count = V-B;
-        else{
-            count = (V-B)/(A-B);
-            if((V-B)%(A-B) != 0) count++;
-        }
+        count = (V-B)/(A-B);
+        if((V-B)%(A-B) != 0) count++;
 
         bw.write(String.valueOf(count));
 
