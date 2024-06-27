@@ -30,13 +30,12 @@ public class Main {
         }
 
         //when
-//        List<Integer> list2 = list.stream().distinct().collect(Collectors.toList());
-        Set<Integer> set = new HashSet<>(list);
-        List<Integer> list2 = new ArrayList<>(set);
+        List<Integer> list2 = list.stream().distinct().collect(Collectors.toList());
+//        Set<Integer> set = new HashSet<>(list);
+//        List<Integer> list2 = new ArrayList<>(set);
         Collections.sort(list2);
         Object[] sorted = list2.toArray();
         for (Integer integer : list) {
-//            bw.write(list2.indexOf(integer)+" ");
             bw.write(Arrays.binarySearch(sorted, integer)+" ");
         }
 
