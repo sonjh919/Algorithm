@@ -16,27 +16,33 @@ class Solution {
         return count;
     }
     
-    private boolean isCorrect(List<Character> list){
+    private boolean isCorrect(List<Character> list) {
         Stack<Character> stack = new Stack<>();
-        
-        for(Character c : list){
-            if(c=='{' || c=='[' || c=='(' )stack.push(c);
-            else if(c=='}'){
-                if(stack.isEmpty())return false;
-                else if(stack.peek()=='{')stack.pop();
+        Map<Character, Character> bracketPairs = Map.of(
+            '}', '{',
+            ']', '[',
+            ')', '('
+        );
+
+        for (Character c : list) {
+            if (isOpenBracket(c)) {
+                stack.push(c);
+            } else if (isCloseBracket(c)) {
+                if (stack.isEmpty() || stack.peek() != bracketPairs.get(c)) {
+                    return false;
+                }
+                stack.pop();
             }
-            else if(c==']'){
-                if(stack.isEmpty())return false;
-                else if(stack.peek()=='[')stack.pop();
-            }
-            else if(c==')'){
-                if(stack.isEmpty())return false;
-                else if(stack.peek()=='(')stack.pop();
-            }
-        
         }
-        
+
         return stack.isEmpty();
-        
+    }
+
+    private boolean isOpenBracket(char c) {
+        return c == '{' || c == '[' || c == '(';
+    }
+
+    private boolean isCloseBracket(char c) {
+        return c == '}' || c == ']' || c == ')';
     }
 }
