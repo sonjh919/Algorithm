@@ -1,48 +1,42 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.IOException;
 
 public class Main {
 
-    static Integer[] score;
-    static Integer[] stair;
+    static Integer dp[];
+    static int arr[];
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // input
-        int count = Integer.parseInt(br.readLine());
-        stair = new Integer[count + 1];
-        score = new Integer[count + 1];
+        int N = Integer.parseInt(br.readLine());
 
-        for (int i = 1; i <= count; i++) {
-            stair[i] = Integer.parseInt(br.readLine());
+        dp = new Integer[N + 1];
+        arr = new int[N + 1];
+
+        for(int i = 1; i <= N; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
         }
 
-        stair[0] = 0;
-        score[0] = stair[0];
-        score[1] = stair[1];
+        dp[0] = arr[0];	// 디폴트값이 null이므로 0으로 초기화 해주어야한다.
+        dp[1] = arr[1];
 
-        if(count>=2){
-            score[2] = stair[1] + stair[2];
+        if(N >= 2) {
+            dp[2] = arr[1] + arr[2];
         }
 
-        bw.write(findScore(count) + "");
+        System.out.println(find(N));
 
-
-        // output
-        br.close();
-        bw.close();
     }
 
-    private static int findScore(int n) {
-        if(score[n] == null){
-            score[n] = Math.max(findScore(n-2), findScore(n-3)+stair[n-1]) + stair[n];
+    static int find(int N) {
+        // 아직 탐색하지 않는 N번째 계단일 경우
+        if(dp[N] == null) {
+            dp[N] = Math.max(find(N - 2), find(N - 3) + arr[N - 1]) + arr[N];
         }
-        return score[n];
+
+        return dp[N];
     }
 
 }
