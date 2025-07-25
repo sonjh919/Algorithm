@@ -1,33 +1,28 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.PriorityQueue;
 
 public class Main {
+    public static void main(String[] args) throws NumberFormatException, IOException   {
+        final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());// 1~n
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
-
-        int N = Integer.parseInt(br.readLine());
-        int x;
-        for (int i = 0; i < N; i++) {
-            x = Integer.parseInt(br.readLine());
-            if(x==0){
-                bw.write(priorityQueue.isEmpty()?"0\n":priorityQueue.poll() + "\n");
-            }
-            else{
-                priorityQueue.add(x);
+        int input;
+        PriorityQueue<Integer> minQueue = new PriorityQueue<Integer>();
+        for (int i = 0; i < n; i++) {
+            input = Integer.parseInt(br.readLine());
+            if (input>0) {
+                minQueue.add(input);
+            } else {
+                if (!minQueue.isEmpty()) {
+                    System.out.println(minQueue.poll());
+                }
+                else{
+                    System.out.println(0);
+                }
             }
         }
-
-        bw.flush();
-        bw.close();
         br.close();
     }
-
 }
