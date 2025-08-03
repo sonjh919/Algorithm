@@ -4,25 +4,33 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+/*
+시간제한 1초: 최대 계산 횟수는 1억번
+N <= 100, O(n^2)도 가능
+ */
 public class Main {
-
-    static int T, sum = 0;
-    static String S;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        T = Integer.parseInt(br.readLine());
-        S = br.readLine();
+        // input
+        int N = Integer.parseInt(br.readLine());
+        String[] s = br.readLine().split("");
 
-        for (int i = 0; i < S.length(); i++) {
-            sum += S.charAt(i)-'0';
+        // sum
+        int sum = 0;
+        for (String num : s) {
+            sum += Integer.parseInt(num);
         }
 
-        bw.write(String.valueOf(sum));
+        // output
+        bw.write(sum + "");
+
+        // close
         bw.flush();
-        bw.close();
         br.close();
+        bw.close();
     }
 }
+
