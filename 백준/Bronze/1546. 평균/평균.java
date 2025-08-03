@@ -4,36 +4,50 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.StringTokenizer;
 
+/*
+시간제한 2초: 최대 계산 횟수는 2억번
+N <= 1000, O(n^2)도 가능
+ */
 public class Main {
-
-    static int N, M;
-    static double sum = 0;
-    static List<Integer> list = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        N = Integer.parseInt(br.readLine());
+        // input
+        int N = Integer.parseInt(br.readLine());
+        String[] scores = br.readLine().split(" ");
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i=0;i<N;i++){
-            list.add(Integer.parseInt(st.nextToken()));
+        // 1. max
+        int max = Integer.MIN_VALUE;
+        for (final String s : scores) {
+            max = Math.max(max, Integer.parseInt(s));
         }
 
-        M = Collections.max(list);
-        for(int i=0;i<N;i++){
-            sum += (double) list.get(i) /M*100;
+        // 2. 점수 고치기
+        List<Double> changeScores = new ArrayList<>();
 
+        for (final String s : scores) {
+            changeScores.add(Double.parseDouble(s)/max*100);
         }
-        bw.write(String.valueOf(sum/N));
 
+        // 3. 평균 구하기
+        double average = 0;
+        for (final Double changeScore : changeScores) {
+            average += changeScore;
+        }
+
+        average /= changeScores.size();
+
+        // output
+        bw.write(average + "");
+
+        // close
         bw.flush();
-        bw.close();
         br.close();
+        bw.close();
     }
 }
+
