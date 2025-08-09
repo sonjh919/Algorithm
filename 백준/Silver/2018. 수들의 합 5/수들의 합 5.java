@@ -19,30 +19,23 @@ public class Main {
         // N input
         int N = Integer.parseInt(br.readLine());
 
-        // N arr
-        int[] arr = new int[N+1];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = i;
-        }
-
         // two pointer
         int start = 1;
         int end = 1;
-        int sum;
+        int sum = 1;
         int count = 0;
 
         while(end<=N){
-            sum = 0;
-            for(int i=start;i<=end;i++){
-                sum += i;
-            }
-
             if(sum==N){
                 count++;
-                end++;
+                sum += ++end;
             }
-            else if(sum > N)start++;
-            else end++;
+            else if(sum > N){
+                sum -= start++;
+            }
+            else{
+                sum += ++end;
+            }
         }
 
         bw.write(count+"");
