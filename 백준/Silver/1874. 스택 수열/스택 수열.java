@@ -1,69 +1,71 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Stack;
 
+/*
+시간제한 2초: 최대 계산 횟수는 2억번
 
+1 <= N <= 100,000
+
+시간 복잡도 : O(NlogN) 까지 가능
+*/
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
-        // 초기설정
-        Scanner sc = new Scanner(System.in);
-        Stack<Integer> stack= new Stack<>();
+        // input
+        int n = Integer.parseInt(br.readLine());
+        Stack<Integer> stack = new Stack<>();
 
-        // 1. n 입력
-        int n = sc.nextInt();
-        int[] inputList = new int[n];
-        String[] result = new String[2*n];
+        int count = 1; // 1부터 시작
+        boolean possible = true;
 
-        // 2. inputList 입력받기
+        for (int i = 0; i < n; i++) {
+            int num = Integer.parseInt(br.readLine());
 
-        for(int i=0;i<n;i++){
-            inputList[i] = sc.nextInt();
-        }
+            // 현재 숫자까지 push
+            if (count <= num) {
+                while (count <= num) {
+                    stack.push(count++);
+                    sb.append("+\n");
+                }
+            }
 
-        // 3. stack 연산
-        int stackFlag = 0;
-        int listFlag = 0;
-        int resultFlag = 0;
-        while(true){
-
-            // push
-            stackFlag++;
-            stack.push(stackFlag);
-
-
-            result[resultFlag] = "+";
-            resultFlag++;
-
-            // 같은 수면 pop
-            while(stack.peek()==inputList[listFlag]) {
+            // stack의 top이 num이면 pop
+            if (!stack.isEmpty() && stack.peek() == num) {
                 stack.pop();
-                listFlag++;
-
-                result[resultFlag] = "-";
-                resultFlag++;
-
-                //완료
-                if(stack.isEmpty())break;
+                sb.append("-\n");
             }
-
-            // 완료
-            if(stackFlag == n && stack.isEmpty())break;
-
-            // push를 다 한 상태에서 pop했을때 숫자가 다를시 NO 출력
-            if(stackFlag == n && stack.peek() != inputList[listFlag]){
-                System.out.println("NO");
-                sc.close();
-               System.exit(0);
+            // 만들 수 없는 경우
+            else {
+                possible = false;
+                break;
             }
-
         }
 
-        // stack 순서 출력
-        for(int i=0;i<resultFlag;i++){
-            System.out.println(result[i]);
+        if (possible) {
+            bw.write(sb.toString());
+        } else {
+            bw.write("NO\n");
         }
 
-
-        sc.close();
+        // close
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
+
+/*
+1 2 5 7 8
++ + + + - -
+
+
+수열(빠진거)
+4 3 6 8 7 5 2 1
+ */
