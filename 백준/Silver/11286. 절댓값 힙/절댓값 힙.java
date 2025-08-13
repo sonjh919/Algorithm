@@ -22,9 +22,9 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         PriorityQueue<Integer> queue = new PriorityQueue<>(
                 Comparator.comparingInt((Integer x) -> Math.abs(x))
-                        .thenComparingInt(x -> x)
+                        .thenComparingInt(x -> x) // thenComapring붙이면 타입 추론 에러 때문에 Math.abs를 람다로 못씀..!
         );
-        
+
         int input;
         for (int i = 0; i < n; i++) {
             input = Integer.parseInt(br.readLine());
