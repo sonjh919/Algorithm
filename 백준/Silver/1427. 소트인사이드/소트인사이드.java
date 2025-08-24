@@ -3,28 +3,39 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
+/*
+시간제한 2초: 최대 계산 횟수는 2억번
+N <= 1,000,000,000
+O(N)
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        //given
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        char[] array = br.readLine().toCharArray();
+        String[] str = br.readLine().split("");
 
-        //when
-        Arrays.sort(array);
+        List<Integer> list = new ArrayList<>();
 
-        for (int i = array.length-1; i >=0 ; i--) {
-            bw.write(String.valueOf(array[i]-'0'));
+        for (String s : str) {
+            list.add(Integer.parseInt(s));
         }
 
-        //then
-        bw.flush();
-        bw.close();
-        br.close();
-    }
+        list.sort(Comparator.reverseOrder());
 
+        for (Integer i : list) {
+            bw.write(i+"");
+        }
+
+        // close
+        bw.flush();
+        br.close();
+        bw.close();
+    }
 }
+
