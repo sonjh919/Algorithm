@@ -3,35 +3,36 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
+/*
+시간제한 2초: 최대 계산 횟수는 2억번
+N <= 1,000,000
+O(NlogN)
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        //given
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int N = Integer.parseInt(br.readLine());
-        List<Integer> list = new ArrayList<>();
+        int n = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < N; i++) {
-            list.add(Integer.parseInt(br.readLine()));
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
         }
 
-        //when
-        Collections.sort(list);
+        Arrays.sort(arr);
 
-        for (Integer i : list) {
-            bw.write(i + "\n");
+        for (int i : arr) {
+            bw.write(i+"\n");
         }
 
-        //then
+        // close
         bw.flush();
-        bw.close();
         br.close();
+        bw.close();
     }
-
 }
+
