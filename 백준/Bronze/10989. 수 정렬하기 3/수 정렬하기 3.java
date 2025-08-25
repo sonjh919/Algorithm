@@ -5,31 +5,34 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
+/*
+시간제한 3초: 최대 계산 횟수는 3억번
+N <= 10,000,000
+O(NlogN)
+ */
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        //given
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int N = Integer.parseInt(br.readLine());
-        int[] array = new int[N];
+        int n = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < N; i++) {
-            array[i] = Integer.parseInt(br.readLine());
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(br.readLine());
         }
 
-        //when
-        Arrays.sort(array);
+        Arrays.sort(arr);
 
-        for (int i : array) {
-            bw.write(i + "\n");
+        for (int i : arr) {
+            bw.write(i+"\n");
         }
 
-        //then
+        // close
         bw.flush();
-        bw.close();
         br.close();
+        bw.close();
     }
-
 }
+
