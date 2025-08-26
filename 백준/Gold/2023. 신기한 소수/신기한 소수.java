@@ -21,8 +21,8 @@ public class Main {
         // input
         n = Integer.parseInt(br.readLine());
 
-        // 2,3,5,7
-        dfs(2, 1);
+        // 2,3,5,7 시작
+        dfs(2, 1); // 숫자, 자릿수
         dfs(3, 1);
         dfs(5, 1);
         dfs(7, 1);
@@ -34,25 +34,23 @@ public class Main {
     }
 
     private static void dfs(int num, int len) {
-        if (!isPrime(num)) {
+        if (!isPrime(num) || n < len) {
             return;
         }
-        if (n < len) {
-            return;
-        }
+
         if (n == len) {
             System.out.println(num);
             return;
         }
 
-        for (int i = 0; i <= 9; i++) {
+        for (int i = 0; i <= 9; i++) { // 자릿수 안되고 소수이면 다음 자릿수 돌기!
             dfs(num * 10 + i, len + 1);
         }
     }
 
     // 소수 판별
     private static boolean isPrime(final int num) {
-        for (int i = 2; i <= Math.sqrt(num); i++) {
+        for (int i = 2; i <= Math.sqrt(num); i++) { // 꿀팁 루트때려서 이전만 확인하면 됨
             if (num % i == 0) {
                 return false;
             }
