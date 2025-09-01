@@ -1,4 +1,3 @@
-import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -8,65 +7,83 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+/*
+시간제한 1초: 최대 계산 횟수는 1억번
+N, M(2 ≤ N, M ≤ 100)
+V = N*M, E = V(V-1)/2
+O(V+E) = 약 10000 + 50000000 번-> bfs 가능
+*/
+
 public class Main {
-    static int[][] map;
     static boolean[][] visited;
+    static int[][] maze;
+
     static int N,M;
 
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
+    static int[] dx = {-1,1,0,0};
+    static int[] dy = {0,0,1,-1};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
+        // input
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        map = new int[N][M];
+        maze = new int[N][M];
         visited = new boolean[N][M];
 
+        String line;
         for (int i = 0; i < N; i++) {
-            char[] ch = br.readLine().toCharArray();
+            line = br.readLine();
             for (int j = 0; j < M; j++) {
-                map[i][j] = ch[j] - '0';
+                maze[i][j] = line.charAt(j)-'0'; // 이걸 왜 안빼줬을까..
             }
         }
 
-        BFS(0,0);
-        bw.write(map[N - 1][M - 1]+"");
+        bfs(0,0);
+        
+        bw.write(maze[N-1][M-1]+"");
 
+        // close
         bw.flush();
         bw.close();
         br.close();
     }
 
-    private static void BFS(int x, int y) {
-        Queue<Point> queue = new LinkedList<>();
-        queue.add(new Point(x,y));
-        visited[x][y] = true;
+    static void bfs(int row, int col) {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(new Node(row, col));
+        visited[row][col] = true;
 
         while(!queue.isEmpty()){
-            Point point = queue.poll();
+            Node node = queue.poll();
 
             for (int i = 0; i < 4; i++) {
-                int nextX = point.x + dx[i];
-                int nextY = point.y + dy[i];
+                int x = node.row + dx[i];
+                int y = node.col + dy[i];
 
-                if (nextX < 0 || nextX >= N || nextY < 0 || nextY >= M)
-                    continue;
-                if (map[nextX][nextY] == 0 || visited[nextX][nextY])
-                    continue;
+                if(0 <= x && x < N && 0 <= y && y < M && !visited[x][y] && maze[x][y]==1){
+                    visited[x][y] = true;
+                    queue.add(new Node(x,y));
+                    maze[x][y] = maze[node.row][node.col]+1;
+                }
 
-                queue.offer(new Point(nextX, nextY));
-                visited[nextX][nextY] = true;
-
-                map[nextX][nextY] = map[point.x][point.y] + 1;
             }
         }
     }
 
+    static class Node{
+        int row;
+        int col;
+
+        public Node(int row, int col){
+            this.row = row;
+            this.col = col;
+        }
+    }
 
 }
