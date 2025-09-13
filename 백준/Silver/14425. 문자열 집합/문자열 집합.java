@@ -3,37 +3,39 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
+/*
+시간제한 2초: 최대 계산 횟수는 2억번
+*/
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        //given
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        st = new StringTokenizer(br.readLine());
+        // input
+        st= new StringTokenizer(br.readLine());
+
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        Map<String, Boolean> S = new HashMap<>();
-
+        List<String> S = new ArrayList<>();
         for (int i = 0; i < N; i++) {
-            S.put(br.readLine(), false);
+            S.add(br.readLine());
         }
 
-        //when
         int count = 0;
         for (int i = 0; i < M; i++) {
-            if(S.containsKey(br.readLine()))count++;
+            if(S.contains(br.readLine()))count++;
         }
 
-        bw.write(String.valueOf(count));
+        bw.write(count+"");
 
-        //then
+        // close
         bw.flush();
         bw.close();
         br.close();
