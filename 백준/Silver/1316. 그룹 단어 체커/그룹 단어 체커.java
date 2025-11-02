@@ -3,54 +3,49 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 public class Main {
-    static String S;
-    static List<Character> ch = new ArrayList<>();
-    static Set<Character> ch2 = new HashSet<>();
-    static int T, count=0;
 
     public static void main(String[] args) throws IOException {
-        //given
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        T = Integer.parseInt(br.readLine());
+        // input
 
-        //when
-        for (int i = 0; i < T; i++) {
-            S = br.readLine();
+        int N = Integer.parseInt(br.readLine());
 
-            for (int j = 0; j < S.length(); j++) {
-                ch.add(S.charAt(j));
-            }
+        boolean[] alphabet;
+        int count = 0;
 
-            for (int j = 0; j < ch.size()-1; j++) {
-                if(ch.get(j) == ch.get(j+1)) {
-                    ch.remove(j);
-                    j--;
+        for(int t=0;t<N;t++){
+            alphabet = new boolean[26];
+            // 0. 단어 입력
+            String s = br.readLine();
+
+            // 1. 그룹 단어 체킹
+            char temp = s.charAt(0);
+            alphabet[temp-'a'] = true;
+            for(int i=1;i<s.length();i++){
+                if(s.charAt(i)!=temp){// 앞이랑 다르면
+                    if(alphabet[s.charAt(i)-'a']) { // 이전에 나왔으면
+                        count--;
+                        break; // 끝
+                    }
                 }
-
+                alphabet[temp-'a'] = true; // 아니면 체크
+                temp = s.charAt(i);
             }
-
-            ch2.addAll(ch);
-
-            if(ch.size()==ch2.size())count++;
-            ch.clear();
-            ch2.clear();
+            count++;
 
         }
 
-        bw.write(String.valueOf(count));
+        bw.write(count+"");
 
-        //then
+
+        // close
         bw.flush();
         bw.close();
         br.close();
     }
-
 }
